@@ -47,8 +47,7 @@ class App(ctk.CTk):
         self.text_ids = []  # キャンバス上のテキストボックスIDを保持するリスト
         self.selected_id = None
 
-
-        self.image_paths = self.settings.get('image_path',[])
+        self.image_paths = self.settings.get('image_path', [])
         self.image_data = self.settings.get('image_data', [])
         self.is_fullscreen = False
 
@@ -80,9 +79,10 @@ class App(ctk.CTk):
         text_button.grid(row=0, column=1, padx=20, pady=20,
                          sticky="ew", columnspan=2)
 
-        fullscreen_button = ctk.CTkButton(master=self,text="スライドショー",command=self.toggle_fullscreen)
+        fullscreen_button = ctk.CTkButton(
+            master=self, text="スライドショー", command=self.toggle_fullscreen)
         fullscreen_button.grid(row=0, column=2, padx=20, pady=20,
-                        sticky="ew", columnspan=2)
+                               sticky="ew", columnspan=2)
 
         # キャンバスを追加
         self.canvas = Canvas(
@@ -100,7 +100,6 @@ class App(ctk.CTk):
             master=self, text=">", command=self.show_next_slide)
         self.right_button.grid(
             row=2, column=1, padx=(0, 20), pady=20, sticky="ew")
-
 
         for image_info in self.image_data:
           if 'path' in image_info and 'size' in image_info and 'position' in image_info:
@@ -243,9 +242,9 @@ class App(ctk.CTk):
           widget.grid()
 
     def exit_fullscreen(self, event=None):
+      self.is_fullscreen = False
       self.attributes("-fullscreen", False)
       self.show_buttons_and_entries()
-
 
     def on_item_press(self, event):
         clicked_item_id = self.canvas.find_withtag("current")[0]
@@ -524,10 +523,10 @@ class App(ctk.CTk):
             for file_path in self.settings.get('image_paths', []):
               if file_path:
                 image_info = {
-                  'path': file_path,
+                    'path': file_path,
                   'position': (50, 50),  # デフォルトの位置
                   'size': (100, 100)     # デフォルトのサイズ
-                  }
+                }
                 self.load_image(image_info)
 
     # 前回のテキストボックスを表示
@@ -535,21 +534,21 @@ class App(ctk.CTk):
               self.display_slide(self.current_slide_index)
 
     def show_next_slide(self):
-          if self.current_slide_index < len(self.image_paths) - 1:
+         if self.current_slide_index < len(self.image_paths) - 1:
             self.current_slides_index += 1
             self.display_slides(self.current_slide_index)
 
     def show_previous_slide(self):
-            # 現在のスライドインデックスを更新
-          if self.current_slide_index > 0:
+           # 現在のスライドインデックスを更新
+         if self.current_slide_index > 0:
             self.current_slide_index -= 1
             self.display_slide(self.current_slide_index)
 
-    def display_slide(self,index):
-          self.canvas.delete('all')
+    def display_slide(self, index):
+         self.canvas.delete('all')
 
         # 指定されたインデックスの画像を表示
-          if index < len(self.image_paths):
+         if index < len(self.image_paths):
             # 画像を読み込んで表示
             image_path = self.image_paths[index]
             image_info = {

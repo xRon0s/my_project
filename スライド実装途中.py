@@ -228,7 +228,16 @@ class App(ctk.CTk):
       if self.is_fullscreen:
         self.hide_buttons_and_entries()
         self.text_entry.grid_remove()
+
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        # 任意のサイズにしたい場合は、以下のようにサイズを調整します
+        window_width = screen_width - 100  # 画面幅より少し小さいサイズに設定
+        window_height = screen_height - 100  # 画面高さより少し小さいサイズに設定
+        # サイズを設定
+        self.geometry(f"{window_width}x{window_height}+50+50")
       else:
+        self.attributes("-fullscreen", False)
         self.show_buttons_and_entries()
 
     def hide_buttons_and_entries(self):
